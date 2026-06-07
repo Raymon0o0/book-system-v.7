@@ -30,3 +30,50 @@
    ```bash
    git clone https://github.com/ваш-логин/book-system.git
    cd book-system****
+   
+2. Соберите проект с помощью Maven:
+   ```bash
+   java -jar target/book-system-0.0.1-SNAPSHOT.jar
+
+3. Запустите приложение:
+   ```bash
+   mvn clean package
+
+4. Откройте браузер и перейдите по адресу:
+http://localhost:8080
+
+
+
+🗄️ Доступ к консоли H2
+Если в настройках включена консоль H2 (spring.h2.console.enabled=true), откройте браузер и перейдите по адресу:
+http://localhost:8080/h2-console
+
+JDBC URL: jdbc:h2:file:./librarydb
+
+User: sa
+
+Password: (оставить пустым)
+
+📁 Структура проекта (основные модули)
+text
+src/main/java/com/library/booksystem/
+├── config/            – настройки безопасности
+├── controller/        – обработка HTTP-запросов
+├── entity/            – JPA-сущности (Book, User, Role, BookRequest)
+├── repository/        – Spring Data JPA репозитории
+├── service/           – бизнес-логика
+└── LibraryBookSystemApplication.java – точка входа
+
+src/main/resources/
+├── static/            – статические ресурсы (изображения, CSS)
+├── templates/         – HTML-шаблоны (Thymeleaf)
+└── application.properties – конфигурация (не включена в репозиторий)
+
+Файл application.properties исключён из репозитория. Для запуска создайте свой на основе application.properties.example.
+
+📄 Лицензия
+Проект создан в учебных целях. Свободно для использования и модификации.
+
+👨‍💻 Автор
+Водолазко Данил Игоревич
+ГБПОУ «Буденновский политехнический колледж», специальность 09.02.07 «Информационные системы и программирование»
