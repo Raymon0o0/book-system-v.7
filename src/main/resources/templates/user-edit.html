@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование пользователя</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-image: url('/images/library.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+        }
+        .edit-container {
+            background-color: rgba(255, 255, 255, 0.97);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <div class="edit-container">
+        <h2 class="mb-4"><i class="bi bi-person-gear"></i> Редактирование пользователя</h2>
+        <form th:action="@{/users/edit/{id}(id=${user.id})}" th:object="${user}" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3"><label class="form-label">ФИО</label><input type="text" class="form-control" th:field="*{fullName}" placeholder="Иванов Иван Иванович"></div>
+                <div class="col-md-6 mb-3"><label class="form-label">Email *</label><input type="email" class="form-control" th:field="*{email}" required placeholder="example@mail.ru"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3"><label class="form-label">Телефон</label><input type="tel" class="form-control" th:field="*{phoneNumber}" placeholder="+7 (912) 345-67-89"></div>
+                <div class="col-md-6 mb-3"><label class="form-label">Факультет/Кафедра</label><input type="text" class="form-control" th:field="*{faculty}" placeholder="Информационные технологии"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3"><label class="form-label">Номер студенческого билета</label><input type="text" class="form-control" th:field="*{studentId}" placeholder="С-2023-001"></div>
+                <div class="col-md-6 mb-3"><label class="form-label">Новый пароль</label><input type="password" class="form-control" th:field="*{password}" placeholder="Оставьте пустым, чтобы не менять"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Роли пользователя</label>
+                <div class="border rounded p-3">
+                    <div class="row">
+                        <div th:each="role : ${allRoles}" class="col-md-3 mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" th:id="'role_' + ${role.id}" th:value="${role.id}" th:name="roleIds" th:checked="${user.roles.contains(role)}">
+                                <label class="form-check-label" th:for="'role_' + ${role.id}"><span th:text="${role.name.toString().replace('ROLE_', '')}"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-top">
+                <button type="submit" class="btn btn-warning"><i class="bi bi-check-circle"></i> Сохранить изменения</button>
+                <a th:href="@{/users/{id}(id=${user.id})}" class="btn btn-secondary ms-2"><i class="bi bi-x-circle"></i> Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

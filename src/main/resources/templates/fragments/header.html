@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:fragment="header">
+    <style>
+        .custom-navbar {
+            background-color: #fdeedf !important;
+            min-height: 140px;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .navbar-wrapper {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .navbar-left {
+            flex: 0 0 auto;
+            padding-left: 30px;
+        }
+        .navbar-brand {
+            color: #c88625 !important;
+            font-weight: 700;
+            font-size: 1.9rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .navbar-brand:hover {
+            color: #b06f1a !important;
+        }
+        .navbar-center {
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+        }
+        .navbar-nav-center {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar-nav-center .nav-link {
+            color: #756258 !important;
+            font-weight: 500;
+            font-size: 1.3rem;
+            padding: 0.5rem 1rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .navbar-nav-center .nav-link:hover {
+            color: #5a4a3f !important;
+        }
+        .navbar-right {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-right: 80px;
+        }
+        .navbar-right .nav-link {
+            color: #756258 !important;
+            font-weight: 500;
+            font-size: 1.3rem;
+            padding: 0.5rem 1rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .navbar-right .nav-link:hover {
+            color: #5a4a3f !important;
+        }
+        .dropdown-item {
+            color: #756258;
+            font-size: 1.1rem;
+        }
+        .dropdown-item:hover {
+            background-color: #f5e6d5;
+            color: #5a4a3f;
+        }
+        @media (max-width: 991.98px) {
+            .custom-navbar {
+                min-height: auto;
+                padding: 1rem;
+            }
+            .navbar-wrapper {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .navbar-left, .navbar-right {
+                flex: 1;
+            }
+            .navbar-center {
+                order: 3;
+                flex-basis: 100%;
+                justify-content: flex-start;
+                margin-top: 10px;
+            }
+            .navbar-nav-center {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+            .navbar-nav-center .nav-link {
+                font-size: 1rem;
+                padding: 0.3rem 0.8rem;
+            }
+            .navbar-right .nav-link {
+                font-size: 1rem;
+            }
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .navbar-nav-center .nav-link {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <nav class="custom-navbar">
+        <div class="navbar-wrapper">
+            <div class="navbar-left">
+                <a class="navbar-brand" href="/">
+                    <i class="bi bi-book me-2"></i> Библиотечная система
+                </a>
+            </div>
+
+            <div class="navbar-center">
+                <ul class="navbar-nav-center">
+                    <li><a class="nav-link" href="/">Главная</a></li>
+                    <li><a class="nav-link" href="/categories">Категории</a></li>
+                    <li sec:authorize="hasRole('LIBRARIAN') or hasRole('ADMIN')"><a class="nav-link" href="/add">Добавить книгу</a></li>
+                    <li sec:authorize="hasRole('LIBRARIAN') or hasRole('ADMIN')"><a class="nav-link" href="/users">Пользователи</a></li>
+                    <li sec:authorize="hasRole('LIBRARIAN') or hasRole('ADMIN')"><a class="nav-link" href="/requests/manage">Заявки</a></li>
+                    <li><a class="nav-link" href="/stats">Статистика</a></li>
+                    <li><a class="nav-link" href="/about">О библиотеке</a></li>
+                </ul>
+            </div>
+
+            <div class="navbar-right">
+                <div sec:authorize="!isAuthenticated()" style="display: flex; gap: 0.5rem;">
+                    <a class="nav-link" href="/login">Войти</a>
+                    <a class="nav-link" href="/register">Регистрация</a>
+                </div>
+                <div sec:authorize="isAuthenticated()" class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i> <span sec:authentication="name"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/requests/my">Мои заявки</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="dropdown-item">Выйти</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+</html>

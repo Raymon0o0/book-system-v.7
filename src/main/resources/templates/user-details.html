@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о пользователе</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-image: url('/images/library.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+        }
+        .user-details-container {
+            background-color: rgba(255, 255, 255, 0.97);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+        }
+        .user-info-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+        .role-badge { font-size: 0.9rem; padding: 6px 10px; margin: 2px; }
+        .role-student { background-color: #28a745; color: white; }
+        .role-teacher { background-color: #17a2b8; color: white; }
+        .role-librarian { background-color: #ffc107; color: #000; }
+        .role-admin { background-color: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <div class="user-details-container">
+        <h1 class="mb-4"><i class="bi bi-person me-2"></i> Информация о пользователе</h1>
+        <div class="user-info-card">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Основная информация</h5>
+                    <p><strong>ФИО:</strong> <span th:text="${user.fullName} ?: 'Не указано'"></span></p>
+                    <p><strong>Логин:</strong> <span th:text="${user.username}"></span></p>
+                    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+                    <p><strong>Телефон:</strong> <span th:text="${user.phoneNumber} ?: 'Не указан'"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Дополнительная информация</h5>
+                    <p><strong>Студенческий ID:</strong> <span th:text="${user.studentId} ?: 'Не указан'"></span></p>
+                    <p><strong>Факультет:</strong> <span th:text="${user.faculty} ?: 'Не указан'"></span></p>
+                    <p><strong>Дата регистрации:</strong> <span th:text="${#temporals.format(user.createdAt, 'dd.MM.yyyy HH:mm')}"></span></p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-3">Роли пользователя</h5>
+                <div>
+                    <span th:each="role : ${user.roles}" class="badge role-badge" th:classappend="'role-' + ${role.name.toString().toLowerCase().replace('role_', '')}" th:text="${role.name.toString().replace('ROLE_', '')}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a href="/users" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Назад к списку</a>
+            <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-warning ms-2"><i class="bi bi-pencil"></i> Редактировать</a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

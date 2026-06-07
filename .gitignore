@@ -1,0 +1,28 @@
+# Java and Maven build output
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# H2 database files (очень важно!)
+*.mv.db
+*.trace.db
+
+# IDE files (IntelliJ IDEA)
+.idea/
+*.iml
+*.iws
+*.ipr
+*.swp
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Application configuration (секретные данные)
+application.properties
+
+# OS metadata
+.DS_Store
+Thumbs.db

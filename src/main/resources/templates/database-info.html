@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о базе данных</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-image: url('/images/database.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+        }
+        .db-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+        .info-card { background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%); color: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+        .connection-card { background-color: #f8f9fa; border-left: 5px solid #28a745; padding: 15px; border-radius: 5px; margin-bottom: 15px; }
+        .sql-example { background-color: #2d3748; color: #e2e8f0; border-radius: 8px; padding: 15px; font-family: monospace; overflow-x: auto; }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <div class="db-container">
+        <h1 class="mb-4 text-center"><i class="bi bi-database-fill"></i> Информация о базе данных MySQL</h1>
+        <div class="info-card"><div class="row"><div class="col-md-8"><h3><i class="bi bi-info-circle"></i> О базе данных</h3><p>Приложение использует MySQL для хранения информации о книгах, пользователях и заявках.</p></div><div class="col-md-4 text-end"><span class="badge bg-light text-primary fs-6 p-2">MySQL 8.0+</span></div></div></div>
+        <div class="row mb-4"><div class="col-md-6"><h4 class="mb-3"><i class="bi bi-plug"></i> Параметры подключения</h4><div class="connection-card"><h6>JDBC URL</h6><code>jdbc:mysql://localhost:3306/librarydb</code></div><div class="connection-card"><h6>Имя пользователя</h6><code>root</code></div><div class="connection-card"><h6>Пароль</h6><code>********</code></div></div><div class="col-md-6"><h4 class="mb-3"><i class="bi bi-lightning"></i> Быстрые действия</h4><div class="d-grid gap-3"><a href="/" class="btn btn-primary"><i class="bi bi-book"></i> К списку книг</a><a href="/add" class="btn btn-success"><i class="bi bi-plus-circle"></i> Добавить книгу</a></div></div></div>
+        <div class="mb-4"><h4><i class="bi bi-code-slash"></i> Примеры SQL-запросов</h4><div class="row"><div class="col-md-6 mb-3"><div class="sql-example"><span style="color: #38bdf8">SELECT</span> * <span style="color: #38bdf8">FROM</span> books;<br><span class="text-muted">-- Показать все книги</span></div></div><div class="col-md-6 mb-3"><div class="sql-example"><span style="color: #38bdf8">SELECT</span> COUNT(*) <span style="color: #38bdf8">FROM</span> books;<br><span class="text-muted">-- Количество книг</span></div></div></div></div>
+        <div class="alert alert-warning"><h5><i class="bi bi-exclamation-triangle"></i> Важная информация</h5><ul class="mb-0"><li>Данные сохраняются постоянно (MySQL — дисковая база данных).</li><li>Для доступа к базе данных используйте MySQL Workbench, phpMyAdmin или командную строку.</li><li>При перезапуске приложения данные не теряются.</li><li>Перед развёртыванием убедитесь, что база данных создана и доступна.</li></ul></div>
+        <div class="text-center mt-4"><a href="https://dev.mysql.com/doc/" target="_blank" class="btn btn-outline-info"><i class="bi bi-book"></i> Документация MySQL</a></div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
